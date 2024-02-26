@@ -1,0 +1,11 @@
+http-> :80
+https->:443
+
+Request example:
+GET /orders/123 HTTP/1.1 (metodo)
+Host: 127.0.0.1:8000 (header)
+User-Agent: Manual-Http-Request (header) 
+
+http application protocol
+
+Trasmission control protocol
