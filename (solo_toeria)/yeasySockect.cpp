@@ -13,7 +13,7 @@ int main() {
     int addrlen = sizeof(address);
     
     char buffer[30000] = {0};
-    const char *hello = "HTTP/1.1 200 OK\nContent-Type: text/html\n\n<html><body><h1>Hello, World!</h1></body></html>";
+    const char *hello = "HTTP/1.1 200 OK\nContent-Type: text/html\n\n<html><body><h1>frocio chi legge</h1></body></html>";
 
     // Creazione della socket file descriptor
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
