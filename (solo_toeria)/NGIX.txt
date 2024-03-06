@@ -1,0 +1,72 @@
+
+### Cosa è un Server Web e NGINX
+
+Un server web è un software che accetta richieste HTTP (il protocollo utilizzato per trasmettere le pagine web) da parte dei client (solitamente browser web) e risponde inviando i contenuti richiesti, come pagine HTML, immagini, file, etc.
+
+**NGINX** è uno dei server web più popolari e potenti. È noto per la sua efficienza e la sua capacità di gestire un numero elevato di connessioni contemporaneamente. Può essere utilizzato anche come reverse proxy, load balancer, e per altre funzionalità avanzate.
+
+### Configurazione di NGINX
+
+La configurazione di NGINX si basa su una serie di direttive organizzate in blocchi. I principali blocchi di configurazione sono `http`, `server`, e `location`.
+
+#### Blocco `http`
+
+Il blocco `http` contiene direttive applicabili a tutte le transazioni HTTP nel server. È possibile configurare impostazioni globali, come il numero di processi worker, limiti sulle dimensioni dei file, e i file di log.
+
+Esempio:
+```nginx
+http {
+    worker_processes 4;
+    client_max_body_size 128m;
+
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+}
+```
+Questo significa che NGINX userà 4 processi worker, accetterà richieste con corpo massimo di 128 megabyte, e scriverà log di accesso e errori nei percorsi specificati.
+
+#### Blocco `server`
+
+All'interno del blocco `http`, puoi avere uno o più blocchi `server` che definiscono le configurazioni per server virtuali specifici. Questi possono ascoltare porte diverse, avere nomi di server diversi, e gestire richieste in modo diverso.
+
+Esempio:
+```nginx
+server {
+    listen 80;
+    server_name esempio.com www.esempio.com;
+
+    location / {
+        root /var/www/esempio.com;
+        index index.html;
+    }
+}
+```
+Qui, un blocco `server` ascolta sulla porta 80 per il dominio "esempio.com" (e il suo www) e serve i file dalla directory specificata.
+
+#### Direttiva `listen`
+
+La direttiva `listen` specifica l'indirizzo IP e la porta su cui il server deve ascoltare le richieste. Se non specificata, NGINX ascolta su tutte le interfacce di rete alla porta 80 (o 8080).
+
+#### Direttiva `server_name`
+
+`server_name` indica a NGINX per quali nomi di dominio (o indirizzi IP) il server dovrebbe rispondere.
+
+#### Blocco `location`
+
+I blocchi `location` all'interno di `server` permettono di gestire le richieste in base al loro percorso URI. Puoi specificare diversi comportamenti per diversi percorsi, come reindirizzamenti, restrizioni di accesso, e molto altro.
+
+Esempio:
+```nginx
+location /immagini {
+    root /var/www/esempio.com;
+}
+```
+In questo caso, tutte le richieste che iniziano con `/immagini` verranno servite dalla directory specificata.
+
+#### Grafici
+
+Genererò un'immagine che rappresenta graficamente la struttura di configurazione di NGINX con i blocchi `http`, `server`, e `location` per una migliore comprensione visiva.
+
+Questa immagine rappresenta graficamente la struttura della configurazione di NGINX. Al livello più alto, abbiamo il blocco `http`, che contiene le impostazioni globali per il server HTTP, come il numero di processi worker e la dimensione massima del corpo delle richieste. All'interno di questo blocco, ci sono uno o più blocchi `server`, ciascuno configurato per specifici nomi di dominio (o indirizzi IP) e porte su cui ascoltare. Ogni blocco `server` può contenere diversi blocchi `location`, che specificano come gestire le richieste per differenti percorsi URI, con comportamenti specifici come il reindirizzamento o la restrizione di accesso.
+
+Questa struttura permette di organizzare in modo modulare e flessibile la configurazione del server web, facilitando la gestione di siti e applicazioni complesse.
